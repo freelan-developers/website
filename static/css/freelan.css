@@ -1,0 +1,18 @@
+#main-navbar {
+	margin-bottom: 0;
+}
+
+#feature-carousel {
+	margin-bottom: 20px;
+}
+
+a.freelan-logo {
+	display: inline-block;
+	height: 50px;
+	width: 133px;
+	background-size: auto 50px;
+	background-color: transparent;
+	background-image: url('/static/images/freelan-logo_with_caption.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
