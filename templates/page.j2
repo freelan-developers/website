@@ -1,7 +1,9 @@
 {% extends "design.j2" %}
 
-{% block title %}{{ page.title }}{% endblock %}
-
 {% block content %}
-{{ page.html | safe }}
+
+<div class="page">
+	{% block page %}{% endblock %}
+</div>
+
 {% endblock %}

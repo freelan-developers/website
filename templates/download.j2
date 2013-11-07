@@ -1,0 +1,101 @@
+{% extends "page.j2" %}
+
+{% block page %}
+<div class="page-header">
+    <h1>Downloads <small>Get freelan now !</small></h1>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail download-block">
+            <img class="img-responsive illustration" src="{{ url_for('static', filename='images/microsoft.png') }}" />
+            <h3>Microsoft Windows&trade;</h3>
+            <p>Freelan works for all modern Windows&trade; versions, in both their 32 bits and 64 editions.</p>
+            <p>Compatibility list:</p>
+            <ul>
+                <li><strong>Windows XP&trade;</strong></li>
+                <li><strong>Windows Vista&trade;</strong></li>
+                <li><strong>Windows Seven&trade;</strong></li>
+                <li><strong>Windows 8&trade;</strong></li>
+            </ul>
+            <div class="btn-block">
+                <a href="#windows" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Download for Windows</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail download-block">
+            <img class="img-responsive illustration" src="{{ url_for('static', filename='images/linux.png') }}" />
+            <h3>Linux</h3>
+            <p>Freelan can be used on all modern (and even not-so-modern) Linux flavors.</p>
+            <p>You can easily <a href="{{ url_for('development') }}">compile it from source</a> on all distributions.</p>
+            <p>If you use Debian or one of its derived distributions, know that we also provide Debian packages. See the <a href="#debian">instructions below</a> for details.</p>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail download-block">
+            <img class="img-responsive illustration" src="{{ url_for('static', filename='images/apple.png') }}" />
+            <h3>Apple Mac OSX&trade;</h3>
+            <p>Freelan runs on Mac OSX starting with OSX Lion&trade; (10.7).</p>
+            <p>Compatibility list:</p>
+            <ul>
+                <li><strong>OSX Lion&trade;</strong> (10.7)</li>
+                <li><strong>OSX Mountain Lion&trade;</strong> (10.8)</li>
+                <li><strong>OSX Mavericks&trade;</strong> (10.9)</li>
+            </ul>
+            <div class="btn-block">
+                <a href="#osx" class="btn btn-primary btn-lg disabled"><span class="glyphicon glyphicon-download"></span> Download for Mac OSX</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="windows">
+    <h1>Windows downloads</h1>
+
+    <table class="table table-bordered download-table">
+        <thead>
+            <tr>
+                <th class="platform">Operating system</th>
+                <th class="arch">32 bits</th>
+                <th class="arch">64 bits</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="platform">Windows XP</td>
+                <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-winxp-x86-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> winxp-x86</a></td>
+                <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-winxp-amd64-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> winxp-amd64</a></td>
+            </tr>
+            <tr>
+                <td class="platform">Windows Vista (and above)</td>
+                <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-x86-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> win-x86</a></td>
+                <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-amd64-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> win-amd64</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="osx">
+    <h1>Mac OSX downloads</h1>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    var download_blocks = $('.download-block').parent();
+
+    maxHeight = Math.max.apply(
+        Math,
+        download_blocks.map(function() {
+            return $(this).height();
+        }).get()
+    );
+
+    download_blocks.height(maxHeight);
+</script>
+{% endblock %}

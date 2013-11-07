@@ -1,0 +1,25 @@
+items:
+  -
+    caption: Home
+    target: home
+  -
+    caption: Download
+    target: download
+  -
+    caption: Support
+    submenu:
+      -
+        caption: F.A.Q
+        target: faq
+      -
+        caption: Get help
+        target: get_help
+      -
+        caption: Configuration examples
+        target: configuration_examples
+  -
+    caption: Development
+    target: development
+  -
+    caption: Contact
+    target: contact

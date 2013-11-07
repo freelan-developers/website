@@ -1,27 +1,33 @@
 {% extends "design.j2" %}
 
-{% block content %}<p>coucou</p>{% endblock %}
-
 {% block subheader %}
-<div id="feature-carousel" class="carousel slide" data-ride="carousel">
+<div id="feature-carousel" class="carousel slide" data-ride="carousel" data-interval="12000">
   <ol class="carousel-indicators">
-    <li data-target="#feature-carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#feature-carousel" data-slide-to="1"></li>
-    <li data-target="#feature-carousel" data-slide-to="2"></li>
+    {% for page in feature_pages %}
+      <li data-target="#feature-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+    {% endfor %}
   </ol>
 
   <div class="carousel-inner" style="background-color: #555;">
+    {% for page in feature_pages %}
+    {% if loop.first %}
     <div class="item active">
+    {% else %}
+    <div class="item">
+    {% endif %}
       <div class="container">
-          <h1>Lol</h1>
-          <h1>Lol</h1>
-          <h1>Lol</h1>
-          <h1>Lol</h1>
-        <div class="carousel-caption">
-          <h1>Lol</h1>
+        <div class="feature-text">
+          {{ page.html | safe }}
         </div>
+
+        {% if page.meta.button %}
+        <p>
+          <a href="{{ url_for(page.meta.button.target) }}#{{ page.meta.button.entity }}" class="btn btn-primary btn-lg">{{ page.meta.button.caption }}</a>
+        </p>
+        {% endif %}
       </div>
     </div>
+    {% endfor %}
   </div>
 
   <a class="left carousel-control" href="#feature-carousel" data-slide="prev">
@@ -31,4 +37,83 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
   </a>
 </div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-4 feature-zone">
+    <img src="{{ url_for('static', filename='images/client-server.png') }}" alt="client-server graph" />
+    <h2>Client-server</h2>
+    <p>Freelan can, of course, be configured to act according to the usual <strong>client-server</strong> pattern, like any other VPN software.<p>
+    <p>In this configuration, one or several clients connect to the server, which may or may not allow clients to communicate with one another. The server don't necessarily need to be part of the network and can even act as a simple relay.</p>
+    <a class="btn btn-default" href="#">Go to the configuration example</a>
+</div>
+
+  <div class="col-lg-4 feature-zone">
+    <img src="{{ url_for('static', filename='images/peer-to-peer.png') }}" alt="peer-to-peer graph" />
+    <h2>Peer-to-peer</h2>
+    <p>The client-server pattern is nice, but it is also a bit fragile. What happens to your connectivity if the server falls for some reason ?<p>
+    <p>For more robust networks, freelan can be configured as a <strong>peer-to-peer</strong> network, where each node can connect directly to all the others. This configuration also brings better performances since traffic between two nodes doesn't need to go through a third node anymore.</p>
+    <a class="btn btn-default" href="#">Go to the configuration example</a>
+  </div>
+
+  <div class="col-lg-4 feature-zone">
+    <img src="{{ url_for('static', filename='images/hybrid.png') }}" alt="hybrid graph" />
+    <h2>Hybrid</h2>
+    <p>What if you would like to mix the benefits of both the client-server and peer-to-peer patterns ?<p>
+    <p>Freelan actually allows for all kinds of connectivity graphs. Some hosts can be connected to some others, but not all of them. You are free to pick the topology you desire, even an <strong>hybrid</strong> one.</p>
+    <p>Need 3 servers and peer-to-peer connection between hosts ? Just go ahead !</p>
+    <a class="btn btn-default" href="#">Go to the configuration example</a>
+  </div>
+</div>
+
+<hr />
+
+<div class="row feature-block" id="definition">
+  <div class="col-md-12">
+    <img class="img-responsive img-circle illustration pull-right" src="{{ url_for('static', filename='images/world.jpg') }}" />
+    <div>
+      <h1><q>A VPN software...</q> <span class="text-muted">Does that mean I can access the Internet anonymously ?</span></h1>
+      <p>Freelan is a <strong>generic</strong> VPN software, not a Web proxy service.</p>
+      <p>It is important to understand the difference: while freelan can indeed be used to create a service like <a href="https://www.vpntunnel.com">VPN Tunnel</a>, it is <strong>not</strong> a service. But have no fear: if your goal is to surf anonymously on the Internet, and you want to use freelan for that, you will <a href="{{ url_for('get_help') }}">get help from the community</a> to set it up.</p>
+      <p>Just keep in mind that freelan has a broader purpose and can be used for much more than just anonymous surfing. You can, for instance:
+        <ul>
+          <li>Create a private network for your friends and/or family.</li>
+          <li>Securely connect to your enterprise or personal network from the outside world.</li>
+          <li>Implement freelan in your own software and use it as a basis for secure communications.</li>
+          <li>... or just anything you want !</li>
+        </ul>
+      </p>
+      <p>The only limit, is your imagination.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row feature-block" id="open-source">
+  <div class="col-md-12">
+    <img class="img-responsive img-circle illustration pull-left" src="{{ url_for('static', filename='images/no-money.jpg') }}" />
+    <div>
+      <h1>Open-source <span class="text-muted">How else would you trust a software ?</span></h1>
+      <p>Freelan is free software, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPLv3 license</a>. By "free", we both mean free as in "free beer" and free as in "freedom". You will never pay a dime to download, use or update the software: everything comes for free, forever.</p>
+      <p>You can easily access the <a href="https://github.com/freelan-developers/freelan-all">source code</a> and make sure what happens to your data. We believe this is paramount when dealing with security software: if the source-code is closed to your eyes, how can you be sure that it does what it claims ? How can you be sure it contains no security flaws ?</p>
+      <p>Being free software means you can use freelan's code in your own <em>free</em> project to create awesome stuff ! Do whatever you want, and share it with others in turn !</p>
+      <p>If you would like to integrate freelan into commercial apps, do not hesitate to <a href="{{ url_for('contact') }}">contact us</a>. Depending on the nature of your project, this might be free as well: freelan was not created for profit, but to give people control over their data. If your goal is the same, we might find an agreement !</p>
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<div class="row feature-block" id="privacy">
+  <div class="col-md-12">
+    <img class="img-responsive img-circle illustration pull-right" src="{{ url_for('static', filename='images/unknown.jpg') }}" />
+    <div>
+      <h1>You have nothing to hide... <span class="text-muted">Not that it is anyones business !</span></h1>
+      <p>The importance of communicating securely has never made more sense than today: whether it is governments spying on your confidential exchanges or companies abusing your trust, more and more people feel the need of communicating securely.</p>
+      <p>Freelan was design with security and your privacy as the main concern: its open-source code can be reviewed at any time by anyone to search for potential weaknesses. Its <a href="https://raw.github.com/freelan-developers/libfscp/master/fscp.txt">protocol specification</a> is clearly accessible and described: you know exactly what happens and when.</p>
+      <p><a href="https://www.schneier.com/blog/archives/2007/07/privacy_and_the.html">You have nothing to hide</a>, but do you really want to give full disclosure ?</p>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
