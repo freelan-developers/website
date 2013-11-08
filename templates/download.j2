@@ -11,6 +11,7 @@
             <img class="img-responsive illustration" src="{{ url_for('static', filename='images/microsoft.png') }}" />
             <h3>Microsoft Windows&trade;</h3>
             <p>Freelan works for all modern Windows&trade; versions, in both their 32 bits and 64 editions.</p>
+            <hr />
             <p>Compatibility list:</p>
             <ul>
                 <li><strong>Windows XP&trade;</strong></li>
@@ -30,7 +31,11 @@
             <h3>Linux</h3>
             <p>Freelan can be used on all modern (and even not-so-modern) Linux flavors.</p>
             <p>You can easily <a href="{{ url_for('development') }}">compile it from source</a> on all distributions.</p>
-            <p>If you use Debian or one of its derived distributions, know that we also provide Debian packages. See the <a href="#debian">instructions below</a> for details.</p>
+            <hr />
+            <p>If you use Debian or one of its derived distributions, know that we also provide Debian packages.</p>
+            <div class="btn-block">
+                <a href="#debian" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> See Debian packages</a>
+            </div>
         </div>
     </div>
 
@@ -39,6 +44,7 @@
             <img class="img-responsive illustration" src="{{ url_for('static', filename='images/apple.png') }}" />
             <h3>Apple Mac OSX&trade;</h3>
             <p>Freelan runs on Mac OSX starting with OSX Lion&trade; (10.7).</p>
+            <hr />
             <p>Compatibility list:</p>
             <ul>
                 <li><strong>OSX Lion&trade;</strong> (10.7)</li>
@@ -46,14 +52,18 @@
                 <li><strong>OSX Mavericks&trade;</strong> (10.9)</li>
             </ul>
             <div class="btn-block">
-                <a href="#osx" class="btn btn-primary btn-lg disabled"><span class="glyphicon glyphicon-download"></span> Download for Mac OSX</a>
+                <a href="#osx" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Download for Mac OSX</a>
             </div>
         </div>
     </div>
 </div>
 
 <div id="windows">
-    <h1>Windows downloads</h1>
+    <div class="page-header">
+        <h1>Windows</h1>
+    </div>
+
+    <h2>Downloads</h2>
 
     <table class="table table-bordered download-table">
         <thead>
@@ -71,31 +81,105 @@
                 <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-winxp-amd64-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> winxp-amd64</a></td>
             </tr>
             <tr>
-                <td class="platform">Windows Vista (and above)</td>
+                <td class="platform">Windows Vista, Seven, 8</td>
                 <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-x86-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> win-x86</a></td>
                 <td class="arch"><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan-1.1-amd64-install.exe" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-download"></span> win-amd64</a></td>
             </tr>
         </tbody>
     </table>
+
+    <h2>Installation instructions</h2>
+</div>
+
+<div id="debian">
+    <div class="page-header">
+        <h1>Debian</h1>
+    </div>
+
+    <h2>Installation</h2>
+
+    <p>Freelan is currently packaged for Debian <code>wheezy</code> and <code>testing/sid</code>.</p>
+
+    <p>Freelan's Debian repository is hosted at <a href="http://debian.freelan.org">http://debian.freelan.org</a>. You may add the following line to your <code>/etc/apt/source.list</code>:
+
+<pre>
+# freelan repository (testing and sid)
+deb http://debian.freelan.org/ unstable main
+</pre>
+
+    <p>Or for Debian <code>wheezy</code>:</p>
+
+<pre>
+# freelan repository (wheezy)
+deb http://debian.freelan.org/ wheezy-backports main
+</pre>
+
+    <p>If you wish so, you can also add the public GPG key for the repository to local trusted keys list (highly recommended):</p>
+
+<pre>
+wget -q http://debian.freelan.org/debian.freelan.org.key -O- | apt-key add -
+</pre>
+
+    <p>Then update your package cache:</p>
+
+<pre>
+# apt-get update
+# apt-get install freelan
+</pre>
+
+    <p>Freelan should now be installed. Congratulations !</p>
+
+    <h2>Configuration</h2>
+
+    <p>The Debian freelan daemon can run simultaneously several separate configurations.</p>
+
+    <p>Copy the template configuration file at <code>/etc/freelan/freelan.conf</code>:</p>
+
+<pre>
+# cp /etc/freelan/freelan.conf /etc/freelan/myconfiguration.conf
+</pre>
+
+    <p>Edit your configuration file according to your needs (don't forget to specify both public and private key files) then edit the <code>/etc/default/freelan</code> file like that:</p>
+
+<pre>
+# This is the configuration file for /etc/init.d/freelan
+
+# Configuration files to load.
+#
+# Values should be separated by spaces.
+# Each entry must match a file at /etc/freelan/.conf
+#
+CONFIGURATIONS="myconfiguration"
+
+# Additional options that are passed to the Daemon.
+#
+#DAEMON_OPTS=""
+</pre>
+
+    <div class="alert alert-warning">
+        <p><strong><span class="glyphicon glyphicon-warning-sign"></span> Have you configured your firewall ?</strong></p>
+        <p>Freelan by default listens on 12000/UDP.</p>
+        <p>For it to run correctly, you must ensure your firewall is correctly configured to allow freelan's communications <strong>inside and outside</strong> the VPN tunnel.</p>
+    </div>
+
+    <p>Finally, start the daemon:</p>
+
+<pre>
+# service freelan start
+Starting freelan instance - myconfiguration:Reading configuration file at: "/etc/freelan/myconfiguration.conf"
+Creating PID file at: "/var/run/freelan.pid.myconfiguration"
+</pre>
+
+    <p>And freelan should now be running ! Congratulations !</p>
 </div>
 
 <div id="osx">
-    <h1>Mac OSX downloads</h1>
+    <div class="page-header">
+        <h1>Mac OSX</h1>
+    </div>
+
+    <h2>Downloads</h2>
+    <h2>Installation instructions</h2>
 </div>
 
-{% endblock %}
-
-{% block javascript %}
-<script type="text/javascript">
-    var download_blocks = $('.download-block').parent();
-
-    maxHeight = Math.max.apply(
-        Math,
-        download_blocks.map(function() {
-            return $(this).height();
-        }).get()
-    );
-
-    download_blocks.height(maxHeight);
-</script>
 {% endblock %}

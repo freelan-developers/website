@@ -148,9 +148,9 @@ a.freelan-logo {
 
 /* Download blocks */
 .download-block {
-	padding: 1em 1em 0;
+	padding: 1em;
 	height: 100%;
-	position: relative;
+	text-align: justify;
 }
 
 .download-block .illustration {
