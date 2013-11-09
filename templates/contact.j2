@@ -1,1 +1,23 @@
 {% extends "page.j2" %}
+
+{% block page %}
+
+<img class="img-responsive pull-right illustration img-circle" src="{{ url_for('static', filename='images/keys.jpg') }}" alt="Keys" />
+
+<div class="page-header">
+	<h1>Contact <small>Wanna be friends ?</small></h1>
+</div>
+
+<p>If you need help and want to ask a support question, please see the instructions <a href="{{ url_for('get_help') }}">here</a>.</p>
+
+<p>To be informed whenever a new freelan release is made, subscribe to the news mailing-list by sending an empty email to <a href="mailto:news-subscribe@freelan.org">news-subscribe@freelan.org</a>.</p>
+
+<p>The news mailing-list is not really overwhelmed so don't be afraid of being spammed. If anything, you can always unsubscribe very easily.</p>
+
+<h2>Commercial &amp; legal requests</h2>
+
+<p>If you desire to contact me personally for a commercial proposal or a legal request, please write to <a href="mailto:contact@freelan.org">contact@freelan.org</a>.</p>
+
+<p><strong>Please, do not use this address for support requests.</strong> Use the users mailing-list instead.</p>
+
+{% endblock %}

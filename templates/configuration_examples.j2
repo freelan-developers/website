@@ -1,1 +1,86 @@
 {% extends "page.j2" %}
+
+{% block page %}
+
+<img class="img-responsive pull-right illustration img-circle" src="{{ url_for('static', filename='images/keyboard.jpg') }}" alt="Black keyboard" />
+
+<div class="page-header">
+	<h1>Configuration examples <small>Coz' copying is fun !</small></h1>
+</div>
+
+<p>This page assumes you are familiar with the <a href="{{ url_for('get_help') }}#adjusting-the-configuration">basic configuration</a> of freelan and that you know how to <a href="{{ url_for('get_help') }}#client-certificate-generation">generate client certificates</a>.</p>
+
+<h2>List of the examples</h2>
+
+<p>
+	<ul>
+		<li><a href="#two-hosts">Two-hosts</a></li>
+	</ul>
+</p>
+
+<hr />
+
+<h2 id="two-hosts">Two hosts</h2>
+
+<p>This section explains how to configure freelan to allow two hosts, <strong>alice</strong> and <strong>bob</strong> to communicate with one-another.</p>
+
+<h3>Context</h3>
+
+<p>Alice and Bob both run a computer at their respective homes. They both have a NAT router that connects them to the Internet.</p>
+<p>They would like to establish a VPN tunnel between their computers to exchange securely pictures of <a href="http://www.lolcats.com/">lolcats</a>.</p>
+<p>Alice is running a Windows Seven computer. Her public Internet hostname is <code>alice.someisp.com</code>. She has set-up a NAT port-forwarding on her router that redirects <code>12000/UDP</code> to <code>12000/UDP</code> on her computer.</p>
+<p>Bob is running Debian Linux. His public Internet hostname is <code>bob.someotherisp.com</code>. He has set-up a NAT port-forwarding on his router that redirects <code>30000/UDP</code> to <code>12000/UDP</code> on his computer.</p>
+<p>Alice and Bob agreed that that alice should have the address <code>9.0.0.1</code> inside the VPN tunnel and that Bob should have <code>9.0.0.2</code>.</p>
+<p>Alice is in charge of the certificate authority. She signed Bob's certificate and gave him the CA certificate file. They generated the following files:</p>
+<p>
+	<ul>
+		<li><code>ca.crt</code> - The CA certificate. Available on both computers.</li>
+		<li><code>ca.key</code> - The CA private key. Alice generated it and keeps it offline on a laptop.</li>
+		<li><code>alice.crt</code> - Alice's certificate, signed by the CA. Available on both computers.</li>
+		<li><code>alice.key</code> - Alice's private key. Available to Alice only.</li>
+		<li><code>bob.crt</code> - Bob's certificate, signed by the CA. Available on both computers.</li>
+		<li><code>bob.key</code> - Bob's private key. Available to Bob only.</li>
+	</ul>
+</p>
+
+<h3>Alice's configuration</h3>
+
+<p class="alert alert-info">For clarity's sake, all the default comments and unused options were removed from the configuration.</p>
+
+<pre>
+[fscp]
+listen_on=0.0.0.0:12000
+contact=bob.someotherisp.com:30000
+
+[tap_adapter]
+ipv4_address_prefix_length=9.0.0.1/24
+dhcp_proxy_enabled=yes
+dhcp_server_ipv4_address_prefix_length=9.0.0.0/24
+
+[security]
+signature_certificate_file=C:\Program Files\Freelan\config\alice.crt
+signature_private_key_file=C:\Program Files\Freelan\config\alice.key
+authority_certificate_file=C:\Program Files\Freelan\config\ca.crt
+</pre>
+
+<h3>Bob's configuration</h3>
+
+<p class="alert alert-info">For clarity's sake, all the default comments and unused options were removed from the configuration.</p>
+
+<pre>
+[fscp]
+listen_on=0.0.0.0:12000
+contact=alice.someisp.com:12000
+
+[tap_adapter]
+ipv4_address_prefix_length=9.0.0.2/24
+dhcp_proxy_enabled=yes
+dhcp_server_ipv4_address_prefix_length=9.0.0.0/24
+
+[security]
+signature_certificate_file=C:\Program Files\Freelan\config\bob.crt
+signature_private_key_file=C:\Program Files\Freelan\config\bob.key
+authority_certificate_file=C:\Program Files\Freelan\config\ca.crt
+</pre>
+
+{% endblock %}

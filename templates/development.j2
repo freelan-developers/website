@@ -1,1 +1,21 @@
 {% extends "page.j2" %}
+
+{% block page %}
+
+<img class="img-responsive pull-right illustration img-circle" src="{{ url_for('static', filename='images/laptop.jpg') }}" alt="Laptop" />
+
+<div class="page-header">
+	<h1>Development <small>Wanna be part of it ?</small></h1>
+</div>
+
+<p>All the source-code is available on <a href="https://github.com/freelan-developers/freelan-all">Github</a>. It is well documented so do not hesitate to read the README files. Pull-requests for features or bug-fix are really appreciated !</p>
+
+<p>To reach the development team, write to the developers mailing-list at <a href="mailto:dev@freelan.org">dev@freelan.org</a>.</p>
+
+<p>You may also register to that mailing-list by sending an empty email to <a href="mailto:dev-subscribe@freelan.org">dev-subscribe@freelan.org</a>. If you intend to become a regular freelan developer, registering is mandatory.</p>
+
+<h2>Protocol specification</h2>
+
+<p>The latest protocol specification is always available <a href="https://raw.github.com/freelan-developers/libfscp/master/fscp.txt">here</a>. Feel free to make suggestions or improvements if you notice that something is suboptimal.</p>
+
+{% endblock %}
