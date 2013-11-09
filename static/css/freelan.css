@@ -153,13 +153,20 @@ a.freelan-logo {
 	text-align: justify;
 }
 
+.download-block h3 {
+	text-align: center;
+	margin-bottom: 0.5em;
+}
+
 .download-block .illustration {
 	filter: none;
 	-webkit-filter: none;
+	width: 180px;
+	margin: 32px auto;
 }
 
 .download-block .btn-block {
-	margin-top: 2em;
+	margin: 2em auto;
 	text-align: center;
 }
 
