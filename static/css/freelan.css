@@ -1,20 +1,3 @@
-body {
-	margin-top: 50px;
-}
-
-@media (max-width: 991px) /* @grid-float-breakpoint -1 */
-{
-	body {
-		margin-top: 0;
-	}
-
-    .navbar-fixed-top
-    {
-    position: relative;
-    top: auto;
-    }
-}
-
 /* Navbar */
 
 a.freelan-logo {
@@ -144,6 +127,7 @@ a.freelan-logo {
 
 .page {
 	padding-top: 2em;
+	text-align: justify;
 }
 
 /* Download blocks */
@@ -185,4 +169,20 @@ a.freelan-logo {
 
 .download-table .arch > a.btn {
 	min-width: 15em;
+}
+
+/* FAQ */
+
+.faq-entry {
+	text-align: justify;
+	clear: right;
+}
+
+.faq-entry + .faq-entry {
+	margin-top: 3em;
+}
+
+.faq-entry h3:first-child {
+	margin-bottom: 1em;
+	border-bottom: 1px solid #eee;
 }

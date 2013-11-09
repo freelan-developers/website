@@ -8,4 +8,27 @@
 	<h1>Frequently Asked Questions <small>Just so you know</small></h1>
 </div>
 
+<p>Here is a list of the most frequently asked questions. If your question is not in the list, feel free to contact the <a href="{{ url_for('get_help') }}">users mailing-list</a>.</p>
+
+<div class="faq-entry">
+	<h3>I installed freelan: where is the graphical user interface ?</h3>
+	<p><strong>There is none</strong>, yet.</p>
+	<p>Freelan was first designed to run transparently in the background, on all operating systems.</p>
+	<p>This won't mean there will never be a graphical user interface: <strong>there are plans for it</strong>, however, designing such a thing is a time consuming operation so it might take while.</p>
+</div>
+
+<div class="faq-entry">
+	<h3>Why isn't freelan available for &lt;my favorite platform&gt; ?</h3>
+	<p>Freelan's code is highly portable, meaning it can in theory run on a lot of different platforms.</p>
+	<p>The main problem is compiling and packaging: all the platforms have their specific set of guidelines regarding packaging. See for instance Windows, where the installer has nothing to do with the Debian packages. If you would like freelan to be available on another platform, the best chance is to get in touch with the <a href="{{ url_for('development') }}">developers</a> and to give them a hand.</p>
+</div>
+
+<div class="faq-entry">
+	<h3>I sent an email to the users mailing-list 2 hours ago. Why haven't I got an answer yet ?!</h3>
+	<p>Short answer: because nobody is paid to answer your questions.</p>
+	<p>Long answer: remember that freelan is free software. Nobody gets paid to do anything. It is actually the opposite: a lot of money is spent to pay the hosting, the mail services and the build machines. All of the work done in freelan was done on free time, and that includes answering the support questions.</p>
+	<p>If you don't get an answer immediately, please just wait, even if it is a couple of days.</p>
+	<p>By all means, don't spam the users mailing-list, <strong>don't write to the contact address instead</strong>: this would only increase the chances that people get pissed and don't answer at all.</p>
+</div>
+
 {% endblock %}

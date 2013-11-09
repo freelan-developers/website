@@ -1,1 +1,309 @@
 {% extends "page.j2" %}
+
+{% block page %}
+
+<img class="img-responsive pull-right illustration img-circle" src="{{ url_for('static', filename='images/switch.jpg') }}" alt="Network switch" />
+
+<div class="page-header">
+	<h1>Support <small>Need assistance ?</small></h1>
+</div>
+
+<p>This page contains <a href="#configuration">everything you need</a> to get started using freelan quickly. However, you might face a situation where you are stuck or where something doesn't work like you would expect. In this situation, you may want to get help from humans.</p>
+
+<p>A good way of getting help is to ask your question on <a href="http://stackoverflow.com/">Stack Overflow</a>, by tagging it <code>#freelan</code>.</p>
+
+<p>The official way to get help, is to write to the users mailing-list at <a href="mailto://users@freelan.org.">users@freelan.org</a>.</p>
+
+<p>While you do so, please be <strong>accurate</strong> in the description of your problem. Namely, please give us:</p>
+<p>
+	<ul>
+		<li>Your operating system, including its architecture (32 bits, 64 bits).</li>
+		<li>The specific version of freelan you installed (giving the download link is appreciated).</li>
+		<li>The network environment you are trying to setup freelan in.</li>
+		<li>The configuration files for your different nodes.</li>
+		<li>The <strong>log output</strong> of freelan that contains the error, if any.</li>
+	</ul>
+</p>
+
+<p>Keep in mind that the more accurate and complete you are in your question, the higher the chances are that someone will answer it quickly.</p>
+<p>If some information is missing, the answer will likely be "please give us the configuration files" or "please give us the log output" anyway, so please spend the time to do it now, not later when we ask you to.</p>
+
+<div class="alert alert-warning">
+	<p>Some people believe their time is more important than anyone's else and decide to write to the contact address or worse, to the main author's personal address instead of the mailing-list to get "faster" answers.</p>
+	<p>This is <strong>wrong</strong> for many reasons:</p>
+
+	<p>
+		<ul>
+			<li>The mailing-list reaches more people. Not only developers are able to see your questions, but other users as well. And those may have faced a similar issue before.</li>
+			<li>The mailing-list is archived regularly, meaning that searching for your problem on your favorite search engine might actually give bring up useful results from past discussions on the mailing-list.</li>
+			<li>The contact or personal email addresses have different purposes: the first one is dedicated to commercial requests, and the latter is... well... personal. You probably wouldn't want your cellphone to ring everytime somebody has a configuration problem. Neither do I.</li>
+		</ul>
+	</p>
+
+	<p><strong>Failing to respect these rules will likely get your question simply ignored.</strong></p>
+</div>
+
+<h2>Configuration</h2>
+
+<p>This section explains the most important options in freelan's configuration file. To get complete configuration samples go to <a href="{{ url_for('configuration_examples') }}">this page</a>.</p>
+
+<p>
+	<ul>
+		<li><a href="#a-quick-note-on-certificates">A quick note on certificates</a></li>
+		<li><a href="#the-tools">The tools</a></li>
+		<li><a href="#creating-the-ca">Creating the CA</a></li>
+		<li><a href="#client-certificate-generation">Client certificate generation</a></li>
+		<li><a href="#adjusting-the-configuration">Adjusting the configuration</a></li>
+	</ul>
+</p>
+
+<hr />
+
+<h3 id="a-quick-note-on-certificates">A quick note on certificates</h3>
+
+<p>Freelan relies on X509 certificates for its security. Certificates work in pair with <em>private keys</em> to provide both authenticity and confidentiality.</p>
+<p>Certificate generation is sometimes considered as a difficult task, due to the complexity of the tools that are involved. We believe it is important to understand the base principle before generating certificates.</p>
+
+<p>Certificates are files that contains information about an entity (usually an Internet host, in this case your computer). Namely, they contain:</p>
+<p>
+	<ul>
+		<li>The hostname to which this certificate is associated.</li>
+		<li>The relevant country, company, email address information.</li>
+		<li>A validity period (start date and stop date) for the certificate.</li>
+		<li>A <strong>public</strong> RSA key.</li>
+		<li>A reference to the Certification Authority (CA) that signed the certificate.</li>
+	</ul>
+</p>
+
+<p>The certificate comes in pair with a <strong>private</strong> key that matches the public key embedded in the certificate. You may give the public key (or the certificate) to anyone. It is not a secret and must be considered public the moment you generate it.</p>
+
+<p>On the other hand, the private key is <strong>private</strong>, and must never, ever, be published anywhere. Ideally, private keys are best kept on an encrypted disk, offline whenever possible. The important point being: nobody except you needs your private key. So don't give it to anyone.</p>
+
+<div class="alert alert-info">
+	<h4>Certification authorities</h4>
+
+	<p>While certificates give us authenticity and confidentiality, anyone can generate a certificate containing wrong information (an incorrect "common name" for instance) and so we have to check every certificate we were given, and to ensure that they really were emitted by the people or the organization they refer to. Those verifications can take a lot of time.</p>
+
+	<p>Luckily enough, X509 contains a mechanism to ease this which is called certificate signing.</p>
+
+	<p>Any X509 certificate can be signed by another certificate called a parent certificate. This signature is generated with the private key associated with the parent certificate and guarantees that the signed certificate was verified by the people that own the parent certificate (also called a certification authority).</p>
+
+	<p>That is, with this mechanism, one doesn't have to trust directly every possible certificate, but only the parent certificates. It is worth saying that this makes the parent private keys <strong>even more sensitive</strong> !</p>
+
+	<p>Note: The parent certificate can also be signed by an even higher parent certificate. This is often referred to as a <strong>certificate chain</strong>.</p>
+</div>
+
+<p>While you can of course use an official certificate authority to sign your certificates for use with freelan, you may also decide to create your own private CA for personal use.</p>
+
+<p>The rest of this starter guide will assume the following:</p>
+<p>
+	<ul>
+		<li>You want a custom CA to sign all your certificates for use with freelan.</li>
+		<li>Your CA will sign all the client certificates of all your freelan hosts.</li>
+		<li>You will publish your CA certificate and your client certificates to all the hosts.</li>
+	</ul>
+</p>
+
+<p>So let's get started !</p>
+
+<hr />
+
+<h3 id="the-tools">The tools</h3>
+
+<p>We will use the command line to generate our certificates. First download and install <code><a href="http://www.openssl.org/">openssl</a></code> and make sure it is in your <code>PATH</code>.</p>
+
+<hr />
+
+<h3 id="creating-the-ca">Creating the CA</h3>
+
+<p>Get the <a href="{{ url_for('static', filename='files/certificate_authority.zip') }}">certificate authority sample folder archive</a> and extract it where you like.</p>
+
+<p>Go inside the extracted folder and type:</p>
+
+<pre>openssl req -new -x509 -extensions v3_ca -keyout key/ca.key -out crt/ca.crt -config ca.cnf</pre>
+
+<p>When prompted for a passphrase, type what you want, but remember it ! You will have to type it whenever the certificate authority private key file will be needed.</p>
+
+<p>You should now have a certificate file at <code>crt/ca.crt</code> and its associated private key file at <code>key/ca.key</code>.</p>
+
+<hr />
+
+<h3 id="client-certificate-generation">Client certificate generation</h3>
+
+<p>Now that you have a working certificate authority, it is time to generate client certificates. Repeat the following step for every certificate/private key pair you need.</p>
+
+<h4>Private key generation</h4>
+
+<p>The first step is to generate a private key:</p>
+
+<pre>openssl genrsa -out alice.key 4096</pre>
+
+<p>If you wish to protect your private key with a passphrase, use the following command line instead:</p>
+
+<pre>openssl genrsa -des3 -out alice.key 4096</pre>
+
+<p class="alert alert-info">Note: Using a passphrase will increase the security of your private key. Even if it gets stolen, the password will be required to use the private key. However, setting a passphrase on the private key can prevent its use in automated systems.</p>
+
+<p>This will generate a file named <code>alice.key</code>. This is the client private key.</p>
+
+<p class="alert alert-warning">Note: every host should generate its own private key to keep it secret. <strong>The certificate authority does not need the client private key to sign the client certificate.</strong></p>
+
+<h4>Issuing a certificate request</h4>
+
+<p>Now that a client has a private key, it must generate a certificate request out of it. This certificate request will be "send" to the certificate authority which can then chose to accept it and generate a signed certificate from it.</p>
+
+<p>To generate a certificate request, type the following command:</p>
+
+<pre>openssl req -new -sha1 -key alice.key -out alice.csr</pre>
+
+<p>Fill all the certificate request attributes.</p>
+
+<p>This will generate a file named <code>alice.csr</code>. This is the client certificate request.</p>
+
+<p class="alert alert-warning">Note: Those two steps (private key and certificate request generation) do <strong>NOT</strong> need to be done in the certificate authority folder. Actually, they should even be done on the final host directly for privacy's sake.</p>
+
+<h4>Generating a signed certificate from a certificate request</h4>
+
+<p>The final step is to generated a signed certificate from the certificate request. This is obviously done on the CA.</p>
+
+<p>Type the following command:</p>
+
+<pre>openssl ca -out crt/alice.crt -in alice.csr -config ca.cnf</pre>
+
+<p>This will prompt for the <code>ca.key</code> passphrase then ask you whether you want to accept the certificate request.</p>
+
+<p>This will generate a <code>alice.crt</code> file: the client signed certificate which can be send to anyone.</p>
+
+<p>Repeat these steps for every client, and you will have everything you need to use freelan ! Congratulations !</p>
+
+<hr />
+
+<h3 id="adjusting-the-configuration">Adjusting the configuration</h3>
+
+<p>The default freelan's configuration is incomplete: more precisely, the entries about the certificates to use are left blank. Let's fill those in to get freelan working !</p>
+
+<p>Open the configuration file (see <a href="{{ url_for('download') }}">configuration instructions</a> in the download page for details about where to find the configuration for your operating system) and locate the following lines:</p>
+
+<pre>
+# The X509 certificate file to use for signing.
+#
+# Unless server.enabled is set to "yes", this parameter is mandatory.
+#
+# Default: &lt;none&gt;
+#signature_certificate_file=
+
+# The private key file to use for signing.
+#
+# Unless server.enabled is set to "yes", this parameter is mandatory.
+#
+# This private key must match with the specified signing certificate file.
+#
+# Default: &lt;none&gt;
+#signature_private_key_file=
+</pre>
+
+<p>Uncomment the two configuration lines and specify the path to your certificate and private key. Here is an example:</p>
+
+<pre>
+# The X509 certificate file to use for signing.
+#
+# Unless server.enabled is set to "yes", this parameter is mandatory.
+#
+# Default: &lt;none&gt;
+signature_certificate_file=/etc/freelan/mycert.crt
+
+# The private key file to use for signing.
+#
+# Unless server.enabled is set to "yes", this parameter is mandatory.
+#
+# This private key must match with the specified signing certificate file.
+#
+# Default: &lt;none&gt;
+signature_private_key_file=/etc/freelan/mykey.key
+</pre>
+
+<p>Now locate the following lines:</p>
+
+<pre>
+# The authority certificates.
+#
+# You may repeat the authority_certificate_file option to specify several
+# authority certificates.
+#
+# Default: &lt;none&gt;
+#authority_certificate_file=
+</pre>
+
+<p>And uncomment the configuration line to indicate to freelan the path to your CA certificate. Here is an example:</p>
+<pre>
+# The authority certificates.
+#
+# You may repeat the authority_certificate_file option to specify several
+# authority certificates.
+#
+# Default: &lt;none&gt;
+authority_certificate_file=/etc/freelan/ca.crt
+</pre>
+
+<p>To specify your IP address on the network, locate the following lines:</p>
+
+<pre>
+# The tap adapter IPv4 address and prefix length to use.
+#
+# The network address must be in numeric format with a netmask suffix.
+#
+# On Windows, the prefix length is ignored (but still must be specified) and
+# the netmask is determined according to the IPv4 class. It is recommended that
+# you set the network.enable_dhcp_proxy option.
+#
+# You may specify an empty value.
+#
+# Default: 9.0.0.1/24
+ipv4_address_prefix_length=9.0.0.1/24
+</pre>
+
+<p>Replace <code>9.0.0.1</code> with the IP address you would like this host to have.</p>
+
+<p>Finally, indicate to freelan where to contact the other hosts by locating these lines:</p>
+
+<pre>
+# The contact list.
+#
+# The list of hosts to connect to.
+#
+# You may repeat the contact option to add several hosts.
+#
+# Examples: 192.168.0.1, [fe80::1]:12000, hostname:1234, some.other.host.org:1234
+# Default: &lt;none&gt;
+#contact=192.168.0.1:12000
+</pre>
+
+<p>Uncomment and repeat the <code>contact=</code> line for all the different hosts you want to contact. Here is an example:</p>
+
+<pre>
+# The contact list.
+#
+# The list of hosts to connect to.
+#
+# You may repeat the contact option to add several hosts.
+#
+# Examples: 192.168.0.1, [fe80::1]:12000, hostname:1234, some.other.host.org:1234
+# Default: &lt;none&gt;
+contact=192.168.0.1:12000
+contact=[fe80::1]:12000
+contact=myhost.dyndns.org:15000
+</pre>
+
+<p>Freelan will attempt to periodically contact those hosts to establish a connection.</p>
+
+<hr />
+
+<div class="alert alert-success">
+	<p>That's it ! You just configured freelan ! Do the same steps on all the other hosts to configure your private network !</p>
+
+	<p><strong>Oh, and don't forget to restart the freelan service/daemon so your changes are taken into account !</strong></p>
+</div>
+
+<p><a class="btn btn-success" href="{{ url_for('download') }}"><span class="glyphicon glyphicon-backward"></span> Go back to the downloads</a>.</p>
+
+{% endblock %}

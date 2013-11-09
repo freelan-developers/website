@@ -11,7 +11,7 @@
             <h3>Microsoft Windows&trade;</h3>
             <img class="img-responsive illustration" src="{{ url_for('static', filename='images/microsoft.png') }}" />
             <div class="btn-block">
-                <a href="#windows" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Download for Windows</a>
+                <a href="#windows" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Downloads for Windows</a>
             </div>
             <p>Freelan works for all modern Windows&trade; versions, in both their 32 bits and 64 editions.</p>
             <hr />
@@ -44,7 +44,7 @@
             <h3>Apple Mac OSX&trade;</h3>
             <img class="img-responsive illustration" src="{{ url_for('static', filename='images/apple.png') }}" />
             <div class="btn-block">
-                <a href="#osx" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Download for Mac OSX</a>
+                <a href="#osx" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Downloads for Mac OSX</a>
             </div>
             <p>Freelan runs on Mac OSX starting with OSX Lion&trade; (10.7).</p>
             <hr />
@@ -94,6 +94,24 @@
     </table>
 
     <h2>Installation instructions</h2>
+    <p>Just double-click on the installer: this will install freelan's Windows service as well as the virtual network interface driver (aka. "TAP adapter").</p>
+    <p>Make sure you install all the components by <strong>not unchecking any of those</strong> in the installer. Those options are reserved for experienced users.</p>
+
+    <h2>Configuration</h2>
+    <p>Upon installation, freelan won't be able to start because its configuration is incomplete. Edit the file at <code>C:\Program Files\FreeLAN\config\freelan.cfg</code> with your favorite text editor.</p>
+    <p>For details about configurations, see <a href="{{ url_for('get_help') }}">this page</a>.</p>
+    <p>Once your configuration is complete, restart the service by typing this command in "Start > Execute" (<kbd>Windows key + R</kbd>):</p>
+    <pre>services.msc</pre>
+    <p>This will popup the Windows services dialog in which you should see the "FreeLAN Service". Select that entry and press "Start" to start the service.</p>
+    <p>If the configuration is correct, the service will start normally and it will also start whenever Windows boots.</p>
+    <p>If the service refuses to start, then something must be wrong with the configuration. You can debug this by launching freelan from the command line.<p>
+    <p>Open a console (<kbd>Windows key + R</kbd>, then "cmd") and type the following commands:</p>
+<pre>
+> cd "C:\Program Files\FreeLAN\bin"
+> freelan -c ..\config\freelan.cfg
+</pre>
+    <p>This will start freelan in foreground mode and parse the configuration. If anything is wrong with it, the command will just stop and tell you what.</p>
+    <p>Once the configuration is fixed, try to start the service again.</p>
 </div>
 
 <div id="debian">
@@ -184,7 +202,57 @@ Creating PID file at: "/var/run/freelan.pid.myconfiguration"
     </div>
 
     <h2>Downloads</h2>
+    <p>Freelan is available for Mac OSX as a <code>.pkg</code> installer.
+
+    <p><a href="https://googledrive.com/host/0B4hTEzuws2NeNk5NZFdGd0FXRlU/freelan_1.1.pkg" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-download"></span> Download installer</a></p>
+
     <h2>Installation instructions</h2>
+    <p>Once you downloaded the installer, just double-click on it and follow the indicated steps.</p>
+    <p>Freelan is designed to run in the background as a daemon, using <code>launchd</code>. At the end of the installation process, freelan registers itself to <code>launchd</code> using the <code>launchctl</code> command.</p>
+
+    <p>The installer installs the following files on the system:</p>
+    <ul>
+        <li><code>/usr/local/sbin/freelan</code> - The main executable.</li>
+        <li><code>/usr/local/etc/freelan/freelan.cfg</code> - The default configuration file read by the daemon.</li>
+        <li><code>/usr/local/share/freelan/uninstall.sh</code> - An uninstall script (see details below).</li>
+        <li><code>/Library/LaunchDaemons/org.freelan.freelan.plist</code> - The <code>launchd</code> daemon registration file.</li>
+    </ul>
+
+    <h2>Configuration</h2>
+    <p>By default, freelan's configuration is incomplete and the daemon just won't run properly.</p>
+    <p>Edit the configuration file at <code>/usr/local/etc/freelan/freelan.cfg</code> and adjust your settings. For details about the configuration, see <a href="{{ url_for('get_help') }}">this page</a>.</p>
+    <p>You may test if your configuration is fine by issuing the following command in a terminal:</p>
+
+    <pre>$ sudo freelan -f -d -c /path/to/your/configuration/file</pre>
+
+    <p>Once the configuration is fine, just reload the service by typing:</p>
+
+<pre>
+$ sudo launchctl stop org.freelan.freelan
+$ sudo launchctl start org.freelan.freelan
+</pre>
+
+    <p>You can now check <code>/var/log/syslog</code> to see if the daemon started properly.</p>
+
+    <h3>Running several instances of the daemon</h3>
+    <p>If you would like to run more than one instance of freelan in the background, follow these steps:</p>
+    <ol>
+        <li>Copy the <code>launchd</code> file at <code>/Library/LaunchDaemons/org.freelan.freelan.plist</code> and rename it to something else (keep the extension).</li>
+        <li>Edit the copied file and change the location of the read configuration file (defaults to <code>/usr/local/etc/freelan/freelan.cfg</code>).</li>
+        <li>Register the new <code>.plist</code> file using the following command:</li>
+    </ol>
+
+    <pre>$ sudo launchctl load /Library/LaunchDaemons/your.new.file.plist</pre>
+
+    <p>You should now have a another instance of the freelan daemon running on your system (as root).</p>
+
+    <h2>Removal</h2>
+    <p>Mac OSX <code>.pkg</code> don't have any specific mechanism to uninstall apps. However, freelan's installer put an uninstall script at <code>/usr/local/share/freelan</code>.</p>
+    <p>To uninstall freelan completely (this also removes the default configuration file in <code>/usr/local/etc/freelan</code>), type the following command in a terminal (you will be prompted for your password):</p>
+
+    <pre>$ sudo /usr/local/share/freelan/uninstall.sh</pre>
+
+    <p>freelan should be completely removed from the system.</p>
 </div>
 
 {% endblock %}
