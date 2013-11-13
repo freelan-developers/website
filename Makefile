@@ -5,7 +5,7 @@ clean:
 	rm -f www.tar.gz
 
 build: clean
-	python site.py -f
+	python website.py -f
 	ln -s build www
 	tar zcvf www.tar.gz www/*
 	rm www
