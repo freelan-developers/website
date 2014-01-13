@@ -258,18 +258,3 @@ $ sudo launchctl start org.freelan.freelan
 </div>
 
 {% endblock %}
-
-{% block javascript %}
- <script type="text/javascript">
-     var download_blocks = $('.download-block').parent();
-
-     maxHeight = Math.max.apply(
-         Math,
-         download_blocks.map(function() {
-             return $(this).height();
-         }).get()
-     );
-
-     download_blocks.height(maxHeight);
- </script>
- +{% endblock %}
