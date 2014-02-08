@@ -46,7 +46,7 @@
     <h2>Client-server</h2>
     <p>Freelan can, of course, be configured to act according to the usual <strong>client-server</strong> pattern, like any other VPN software.<p>
     <p>In this configuration, one or several clients connect to the server, which may or may not allow clients to communicate with one another. The server don't necessarily need to be part of the network and can even act as a simple relay.</p>
-    <a class="btn btn-default" href="#">Go to the configuration example</a>
+    <a class="btn btn-default" href="{{ url_for('configuration_examples') }}">Go to the configuration examples</a>
 </div>
 
   <div class="col-lg-4 feature-zone">
@@ -54,7 +54,7 @@
     <h2>Peer-to-peer</h2>
     <p>The client-server pattern is nice, but it is also a bit fragile. What happens to your connectivity if the server falls for some reason ?<p>
     <p>For more robust networks, freelan can be configured as a <strong>peer-to-peer</strong> network, where each node can connect directly to all the others. This configuration also brings better performances since traffic between two nodes doesn't need to go through a third node anymore.</p>
-    <a class="btn btn-default" href="#">Go to the configuration example</a>
+    <a class="btn btn-default" href="{{ url_for('configuration_examples') }}">Go to the configuration examples</a>
   </div>
 
   <div class="col-lg-4 feature-zone">
@@ -63,7 +63,7 @@
     <p>What if you would like to mix the benefits of both the client-server and peer-to-peer patterns ?<p>
     <p>Freelan actually allows for all kinds of connectivity graphs. Some hosts can be connected to some others, but not all of them. You are free to pick the topology you desire, even an <strong>hybrid</strong> one.</p>
     <p>Need 3 servers and peer-to-peer connection between hosts ? Just go ahead !</p>
-    <a class="btn btn-default" href="#">Go to the configuration example</a>
+    <a class="btn btn-default" href="{{ url_for('configuration_examples') }}">Go to the configuration examples</a>
   </div>
 </div>
 
