@@ -33,8 +33,8 @@
 
 <p>Alice and Bob both run a computer at their respective homes. They both have a NAT router that connects them to the Internet.</p>
 <p>They would like to establish a VPN tunnel between their computers to exchange securely pictures of <a href="http://www.lolcats.com/">lolcats</a>.</p>
-<p>Alice is running a Windows Seven computer. Her public Internet hostname is <code>alice.someisp.com</code>. She has set-up a NAT port-forwarding on her router that redirects <code>12000/UDP</code> to <code>12000/UDP</code> on her computer.</p>
-<p>Bob is running Debian Linux. His public Internet hostname is <code>bob.someotherisp.com</code>. He has set-up a NAT port-forwarding on his router that redirects <code>30000/UDP</code> to <code>12000/UDP</code> on his computer.</p>
+<p>Alice is running a Windows Seven computer. Her public Internet hostname is <code>alice.someisp.com</code>. To higher the chances of avoiding NAT issues, she has set-up a NAT port-forwarding on her router that redirects <code>12000/UDP</code> to <code>12000/UDP</code> on her computer.</p>
+<p>Bob is running Debian Linux. His public Internet hostname is <code>bob.someotherisp.com</code>. To higher the chances of avoiding NAT issues, he has set-up a NAT port-forwarding on his router that redirects <code>30000/UDP</code> to <code>12000/UDP</code> on his computer.</p>
 <p>Alice and Bob agreed that that alice should have the address <code>9.0.0.1</code> inside the VPN tunnel and that Bob should have <code>9.0.0.2</code>.</p>
 <p>Alice is in charge of the certificate authority. She signed Bob's certificate and gave him the CA certificate file. They generated the following files:</p>
 <p>
@@ -64,9 +64,9 @@ dhcp_proxy_enabled=yes
 dhcp_server_ipv4_address_prefix_length=9.0.0.0/24
 
 [security]
-signature_certificate_file=C:\Program Files\Freelan\config\alice.crt
-signature_private_key_file=C:\Program Files\Freelan\config\alice.key
-authority_certificate_file=C:\Program Files\Freelan\config\ca.crt
+signature_certificate_file="C:\Program Files\Freelan\config\alice.crt"
+signature_private_key_file="C:\Program Files\Freelan\config\alice.key"
+authority_certificate_file="C:\Program Files\Freelan\config\ca.crt"
 </pre>
 
 <h3>Bob's configuration</h3>
