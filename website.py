@@ -90,6 +90,13 @@ def contact():
         menu=get_menu('main'),
     )
 
+@app.route('/donate.html')
+def donate():
+    return render_template(
+        'donate.j2',
+        menu=get_menu('main'),
+    )
+
 def main():
     """
     The script entry point.

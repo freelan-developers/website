@@ -15,6 +15,14 @@ a.freelan-logo {
 	margin-bottom: 0;
 }
 
+.navbar-inverse .navbar-nav > li.highlight > a {
+  color: #9d9;
+}
+
+.navbar-inverse .navbar-nav > li.active.highlight > a {
+  color: #cfc;
+}
+
 /* Carousel */
 
 #feature-carousel {

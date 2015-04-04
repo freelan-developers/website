@@ -1,0 +1,33 @@
+{% extends "page.j2" %}
+
+{% block page %}
+
+<img class="img-responsive pull-right illustration img-circle" src="{{ url_for('static', filename='images/keys.jpg') }}" alt="Keys" />
+
+<div class="page-header">
+	<h1>Donate <small>Show your support !</small></h1>
+</div>
+
+<p>I develop FreeLAN on my spare time and it's not a small task. I you like the software and want to contribute but don't have the time to do so, please consider a donation. Any amount is welcome.</p>
+
+<p>The money will be used <strong>responsibly</strong> for FreeLAN development: to buy test hardware, to automate builds for more frequent releases, to buy signature certificates for installers, and so on.</p>
+
+<p>FreeLAN will always remain free and open-source: help me in making the world a more secure place !</p>
+
+<p>To donate, you can just click the button below:</p>
+
+<p>
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+  ">
+  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</p>
+
+<p>If you don't trust paypal and you'd prefer to donate by other means, that's fine too: feel free to contact me at <a href="mailto:contact@freelan.org">contact@freelan.org</a> in that case.</p>
+
+<p>If you visit Montr&eacute;al you also have the option of buying me a beer !</p>
+
+{% endblock %}

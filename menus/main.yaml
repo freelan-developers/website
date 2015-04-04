@@ -21,5 +21,9 @@ items:
     caption: Development
     target: development
   -
+    caption: Donate
+    target: donate
+    highlight: true
+  -
     caption: Contact
     target: contact
