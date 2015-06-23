@@ -24,6 +24,11 @@
 </div>
 
 <div class="faq-entry">
+	<h3>So, I've got two computers set up with the freelan binary, what is the easiest and fastest way to connect them now?</h3>
+	<p>First you need to find out their public IP or - if they have - public hostname. Their address, so to speak.  <!--talk about canyouseeme.org or better yet display the user's IP straight out--> One of the computers has to have UDP port 12000 exposed to the internet.  Then, if the first computer has $IP1 and port 12000 open you can connect the two as follows.  As root on computer 1: 'freelan --security.passphrase "my_secret" --tap_adapter.ipv4_address_prefix_length 9.0.0.2/24' and on computer 2: 'freelan --security.passphrase "my_secret" --fscp.contact $IP1:12000'.  You should then be able to get a positive response from 'ping -c 3 9.0.0.1" on computer 1.</p>
+</div>
+
+<div class="faq-entry">
 	<h3>I sent an email to the users mailing-list 2 hours ago. Why haven't I got an answer yet ?!</h3>
 	<p>Short answer: because nobody is paid to answer your questions.</p>
 	<p>Long answer: remember that freelan is free software. Nobody gets paid to do anything. It is actually the opposite: a lot of money is spent to pay the hosting, the mail services and the build machines. All of the work done in freelan was done on free time, and that includes answering the support questions.</p>
