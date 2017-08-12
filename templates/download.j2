@@ -36,7 +36,6 @@
             <p>Freelan can be used on all modern (and even not-so-modern) Linux flavors.</p>
             <p>You can easily <a href="{{ url_for('development') }}">compile it from source</a> on all distributions.</p>
             <hr />
-            <p>If you use Debian or one of its derived distributions, know that we also provide Debian packages.</p>
         </div>
     </div>
 
@@ -129,40 +128,7 @@
 
     <p>Freelan is currently packaged for Debian and officially maintained. It is available via <code>apt-get install freelan</code>.</p>
 
-    <p>A Raspberry Pi repository is also available at: <a href="http://oss.leggewie.org/freelan/">http://oss.leggewie.org/freelan/</a>.
-
-    <div class="page-header">
-      <h3>Older versions</h3>
-    </div>
-
-    <p>Alternatively, an old Freelan's Debian repository is hosted at <a href="http://debian.freelan.org">http://debian.freelan.org</a>. Those versions are NOT up-to-date and the <code>apt-get install</code> is highly recommended. You may add the following line to your <code>/etc/apt/source.list</code>:
-
-<pre>
-# freelan repository (testing and sid)
-deb http://debian.freelan.org/ unstable main
-</pre>
-
-    <p>Or for Debian <code>wheezy</code>:</p>
-
-<pre>
-# freelan repository (wheezy)
-deb http://debian.freelan.org/ wheezy-backports main
-</pre>
-
-    <p>If you wish so, you can also add the public GPG key for the repository to local trusted keys list (highly recommended):</p>
-
-<pre>
-wget -q http://debian.freelan.org/debian.freelan.org.key -O- | apt-key add -
-</pre>
-
-    <p>Then update your package cache:</p>
-
-<pre>
-# apt-get update
-# apt-get install freelan
-</pre>
-
-    <p>Freelan should now be installed. Congratulations !</p>
+    <p>A Raspberry Pi repository is also available at: <a href="http://oss.leggewie.org/freelan/">http://oss.leggewie.org/freelan/</a>, provided by Rolf Leggewie, the official Debian Maintainer of freelan.
 
     <h2>Configuration</h2>
 
