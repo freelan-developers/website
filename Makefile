@@ -16,3 +16,6 @@ deploy: build
 	ssh freelan@ftp.freelan.org mv www www.backup
 	ssh freelan@ftp.freelan.org tar zxvf www.tar.gz
 	ssh freelan@ftp.freelan.org rm www.tar.gz
+
+run:
+	python website.py
