@@ -15,12 +15,14 @@ a.freelan-logo {
 	margin-bottom: 0;
 }
 
-.navbar-inverse .navbar-nav > li.highlight > a {
-  color: #9d9;
+#main-navbar li.highlight > a {
+	color: green;
+	background-color: #e0ffe0;
 }
 
-.navbar-inverse .navbar-nav > li.active.highlight > a {
-  color: #cfc;
+#main-navbar li.highlight > a:hover {
+	color: lightgreen;
+	background-color: #efffef;
 }
 
 /* Carousel */
@@ -31,35 +33,41 @@ a.freelan-logo {
 }
 
 #feature-carousel > .carousel-inner {
-	background: url('/static/images/striped-background.png');
-	background-repeat: repeat-x;
+	background: url('/static/images/laptop.jpg');
+	background-repeat: no-repeat;
 	background-color: black;
-	box-shadow: inset 0 -10px 10px -10px #000000;
-    -moz-box-shadow: inset 0 -10px 10px -10px #000000;
-    -webkit-box-shadow: inset 0 -10px 10px -10px #000000, inset 0 10px 10px -10px #000000;
+	background-size: cover;
+	box-shadow: inset 0 -1px 1px -1px #000000;
+	-moz-box-shadow: inset 0 -1px 1px -1px #000000;
+	-webkit-box-shadow: inset 0 -1px 1px -1px #000000, inset 0 1px 1px -1px #000000;
 }
 
 #feature-carousel > .carousel-inner > .item {
-	min-height: 320px;
-	color: white;
+	min-height: 440px;
+	color: #333;
+	font-weight: bold;
 	padding-bottom: 72px;
 }
 
 #feature-carousel > .carousel-inner > .item .feature-text h1 {
+	max-width: 35em;
 	font-style: italic;
-	text-shadow: 2px 2px black;
-	text-align: center;
+	text-align: left;
+	margin: 1em 48px 1.5em 48px;
 }
 
 #feature-carousel > .carousel-inner > .item p {
-	max-width: 45em;
-	margin: 0 auto;
-	margin-top: 1em;
-	text-align: center;
+	max-width: 35em;
+	margin: 1em 48px 1.5em 48px;
+	text-align: justify;
+}
+
+#feature-carousel > .carousel-inner > .item p.action {
+	margin-top: 2em;
+	text-align: right;
 }
 
 #feature-carousel > .carousel-inner > .item .feature-text p {
-	text-shadow: 1px 1px black;
 	text-align: justify;
 }
 
@@ -87,9 +95,10 @@ a.freelan-logo {
 
 .illustration {
 	width: 250px;
+	height: 250px;
 	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
-    filter: gray;
-    -webkit-filter: grayscale(100%);
+	filter: gray;
+	-webkit-filter: grayscale(100%);
 }
 
 .illustration.pull-right {

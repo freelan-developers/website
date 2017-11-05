@@ -21,7 +21,7 @@
         </div>
 
         {% if page.meta.button %}
-        <p>
+        <p class="action">
           <a href="{{ url_for(page.meta.button.target) }}#{{ page.meta.button.entity }}" class="btn btn-primary btn-lg">{{ page.meta.button.caption }}</a>
         </p>
         {% endif %}
